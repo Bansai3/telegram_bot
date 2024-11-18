@@ -21,18 +21,18 @@ class VPNService:
         if response is None:
             raise ServerErrorException(errors['server_error']())
 
-        countries = [country for country in response]
+        countries = [country for country in response.countries]
         return countries
 
     def get_country_by_name(self, country_name):
-        c_name = proto_dot_country__pb2.CountryName(country_name)
+        c_name = proto_dot_country__pb2.CountryName(name=country_name)
         response = self.country_stub.GetCountryByName(c_name)
         if response is None:
             raise ServerErrorException(errors['server_error']())
         return response
 
     def get_key(self, subscription_id):
-        request = proto_dot_key__pb2.KeyRequest(subscription_id)
+        request = proto_dot_key__pb2.KeyRequest(subscription_id=subscription_id)
         response = self.key_stub.GetKey(request)
 
         if response is None:

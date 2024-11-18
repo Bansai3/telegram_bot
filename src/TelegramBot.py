@@ -31,11 +31,12 @@ class TelegramBot:
         @bot.message_handler(commands=['start'])
         def handle_start_command(message):
             try:
-                user_value = self.__user_service.get_user(message)
-                bot.send_message(message.chat.id, commands['start'](user_value), parse_mode='html')
+                user_name = self.__user_service.get_user(message)
+                bot.send_message(message.chat.id, commands['start'](user_name), parse_mode='html')
             except ServerErrorException as e:
                 bot.send_message(message.chat.id, commands['server_error'](), parse_mode='html')
-            except:
+            except Exception as e:
+                print(str(e))
                 response_message = self.__user_service.register_user(message)
                 bot.send_message(message.chat.id, commands['start'](response_message), parse_mode='html')
             # bot.send_message(message.chat.id, commands['start'](message.from_user.first_name + ' ' + message.from_user.last_name), parse_mode='html')
@@ -63,12 +64,11 @@ class TelegramBot:
                 try:
                     countries = self.__vpn_service.get_countries()
                 except ServerErrorException as e:
-                    bot.send_message(call.message.chat.id, str(e), parse_mode='html')
+                    bot.send_message(call.message.chat.id, str(e))
                     return
                 except Exception as e:
-                    bot.send_message(call.message.chat.id, str(e), parse_mode='html')
+                    bot.send_message(call.message.chat.id, str(e))
                     return
-                # countries = ["America"]
                 markup_inline = types.InlineKeyboardMarkup()
                 for country in countries:
                     markup_inline.add(
@@ -89,10 +89,22 @@ class TelegramBot:
                         key_value = self.__get_key(call.data, call.from_user.id, True)
                         bot.send_message(call.message.chat.id, commands['key'](key_value), parse_mode='html')
                     except ServerErrorException as e:
-                        bot.send_message(call.message.chat.id, str(e), parse_mode='html')
+                        bot.send_message(call.message.chat.id, str(e))
                     except:
-                        bot.send_message(call.message.chat.id, errors['server_connection_error'], parse_mode='html')
+                        bot.send_message(call.message.chat.id, errors['trial_subscription_already_bought']())
                 elif command_parts[0] == 'sub':
+                    try:
+                        subscriptions_ids = self.__get_user_subscriptions(call.from_user.id)
+                        chat_member = bot.get_chat_member(self.__get_subscription_group_id(), call.from_user.id)
+                        if len(subscriptions_ids) == 0 and chat_member.status in ['member', 'administrator', 'creator']:
+                            bot.ban_chat_member(call.message.chat.id, call.from_user.id)
+                            bot.unban_chat_member(call.message.chat.id, call.from_user.id)
+                        elif len(subscriptions_ids) != 0 and chat_member.status in ['member', 'administrator', 'creator']:
+                            bot.send_message(call.message.chat.id, errors['subscription_already_bought']())
+                            return
+                    except ServerErrorException as e:
+                        bot.send_message(call.message.chat.id, str(e))
+                        return
                     bot.send_message(call.message.chat.id, 'Для оплаты подписки перейдите по данной ссылке:\n\n' +
                                      self.__get_subscription_link())
                     markup_inline = types.InlineKeyboardMarkup()
@@ -108,6 +120,7 @@ class TelegramBot:
                             bot.send_message(call.message.chat.id, commands['paid_sub_info'](), parse_mode='html')
                             self.log.info('User %s paid for subscription', call.from_user.id)
                             self.log.debug('User info: %s', chat_member.user)
+
                             key_value = self.__get_key(call.data, call.from_user.id, False)
                             bot.send_message(call.message.chat.id, commands['key'](key_value), parse_mode='html')
                         else:
@@ -150,3 +163,7 @@ class TelegramBot:
         subscription = self.__payment_service.buy_subscription(country.id, user_id, is_trial)
         key_value = self.__vpn_service.get_key(subscription.id)
         return key_value
+
+    def __get_user_subscriptions(self, user_id):
+        subscriptions_ids = self.__payment_service.get_all_user_subscriptions(user_id)
+        return subscriptions_ids
