@@ -97,7 +97,7 @@ class TelegramBot:
                         subscriptions_ids = self.__get_user_subscriptions(call.from_user.id)
                         chat_member = bot.get_chat_member(self.__get_subscription_group_id(), call.from_user.id)
                         if len(subscriptions_ids) == 0 and chat_member.status in ['member', 'administrator', 'creator']:
-                            bot.ban_chat_member(call.message.chat.id, call.from_user.id)
+                            bot.kick_chat_member(call.message.chat.id, call.from_user.id)
                             bot.unban_chat_member(call.message.chat.id, call.from_user.id)
                         elif len(subscriptions_ids) != 0 and chat_member.status in ['member', 'administrator', 'creator']:
                             bot.send_message(call.message.chat.id, errors['subscription_already_bought']())
