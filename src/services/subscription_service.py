@@ -1,6 +1,11 @@
-from subscription_pb2_grpc import *
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../utils'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../pb2_module/subscription'))
 from errors import *
-from server_error_exception import *
+from subscription_pb2_grpc import *
+from exceptions.server_error_exception import *
 import datetime
 from google.protobuf.timestamp_pb2 import Timestamp
 

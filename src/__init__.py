@@ -1,1 +1,1 @@
-from .vpn_service import *
+from src.services.vpn_service import *

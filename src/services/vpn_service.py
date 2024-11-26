@@ -1,10 +1,17 @@
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../utils'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../pb2_module/proxy'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../pb2_module/country'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../pb2_module/key'))
 from proxy_pb2_grpc import *
 from country_pb2_grpc import *
 from key_pb2_grpc import *
 from errors import *
-from server_error_exception import *
+
+from exceptions.server_error_exception import *
 from google.protobuf.empty_pb2 import Empty
-import country_pb2
 
 
 class VPNService:

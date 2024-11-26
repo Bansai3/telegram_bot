@@ -1,8 +1,14 @@
-from user_pb2_grpc import *
-from errors import *
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../utils'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../pb2_module/user'))
+
 from commands import *
-from server_error_exception import *
-from user_not_found_exception import *
+from user_pb2_grpc import *
+
+from errors import *
+from exceptions.server_error_exception import *
 
 
 class UserService:

@@ -3,7 +3,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-import country_pb2 as proto_dot_country__pb2
+from proto import country_pb2 as proto_dot_country__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
 GRPC_VERSION = grpc.__version__
@@ -11,6 +11,7 @@ _version_not_supported = False
 
 try:
     from grpc._utilities import first_version_is_lower
+
     _version_not_supported = first_version_is_lower(GRPC_VERSION, GRPC_GENERATED_VERSION)
 except ImportError:
     _version_not_supported = True
@@ -35,20 +36,20 @@ class CountryServiceStub(object):
             channel: A grpc.Channel.
         """
         self.GetAllCountries = channel.unary_unary(
-                '/proto.CountryService/GetAllCountries',
-                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=proto_dot_country__pb2.Countries.FromString,
-                _registered_method=True)
+            '/proto.CountryService/GetAllCountries',
+            request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            response_deserializer=proto_dot_country__pb2.Countries.FromString,
+            _registered_method=True)
         self.GetCountryByName = channel.unary_unary(
-                '/proto.CountryService/GetCountryByName',
-                request_serializer=proto_dot_country__pb2.CountryName.SerializeToString,
-                response_deserializer=proto_dot_country__pb2.Country.FromString,
-                _registered_method=True)
+            '/proto.CountryService/GetCountryByName',
+            request_serializer=proto_dot_country__pb2.CountryName.SerializeToString,
+            response_deserializer=proto_dot_country__pb2.Country.FromString,
+            _registered_method=True)
         self.CreateCountry = channel.unary_unary(
-                '/proto.CountryService/CreateCountry',
-                request_serializer=proto_dot_country__pb2.CountryName.SerializeToString,
-                response_deserializer=proto_dot_country__pb2.Country.FromString,
-                _registered_method=True)
+            '/proto.CountryService/CreateCountry',
+            request_serializer=proto_dot_country__pb2.CountryName.SerializeToString,
+            response_deserializer=proto_dot_country__pb2.Country.FromString,
+            _registered_method=True)
 
 
 class CountryServiceServicer(object):
@@ -75,43 +76,43 @@ class CountryServiceServicer(object):
 
 def add_CountryServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetAllCountries': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAllCountries,
-                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=proto_dot_country__pb2.Countries.SerializeToString,
-            ),
-            'GetCountryByName': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetCountryByName,
-                    request_deserializer=proto_dot_country__pb2.CountryName.FromString,
-                    response_serializer=proto_dot_country__pb2.Country.SerializeToString,
-            ),
-            'CreateCountry': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateCountry,
-                    request_deserializer=proto_dot_country__pb2.CountryName.FromString,
-                    response_serializer=proto_dot_country__pb2.Country.SerializeToString,
-            ),
+        'GetAllCountries': grpc.unary_unary_rpc_method_handler(
+            servicer.GetAllCountries,
+            request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            response_serializer=proto_dot_country__pb2.Countries.SerializeToString,
+        ),
+        'GetCountryByName': grpc.unary_unary_rpc_method_handler(
+            servicer.GetCountryByName,
+            request_deserializer=proto_dot_country__pb2.CountryName.FromString,
+            response_serializer=proto_dot_country__pb2.Country.SerializeToString,
+        ),
+        'CreateCountry': grpc.unary_unary_rpc_method_handler(
+            servicer.CreateCountry,
+            request_deserializer=proto_dot_country__pb2.CountryName.FromString,
+            response_serializer=proto_dot_country__pb2.Country.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'proto.CountryService', rpc_method_handlers)
+        'proto.CountryService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
     server.add_registered_method_handlers('proto.CountryService', rpc_method_handlers)
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class CountryService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def GetAllCountries(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                        target,
+                        options=(),
+                        channel_credentials=None,
+                        call_credentials=None,
+                        insecure=False,
+                        compression=None,
+                        wait_for_ready=None,
+                        timeout=None,
+                        metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,
@@ -130,15 +131,15 @@ class CountryService(object):
 
     @staticmethod
     def GetCountryByName(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                         target,
+                         options=(),
+                         channel_credentials=None,
+                         call_credentials=None,
+                         insecure=False,
+                         compression=None,
+                         wait_for_ready=None,
+                         timeout=None,
+                         metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,
@@ -157,15 +158,15 @@ class CountryService(object):
 
     @staticmethod
     def CreateCountry(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                      target,
+                      options=(),
+                      channel_credentials=None,
+                      call_credentials=None,
+                      insecure=False,
+                      compression=None,
+                      wait_for_ready=None,
+                      timeout=None,
+                      metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,

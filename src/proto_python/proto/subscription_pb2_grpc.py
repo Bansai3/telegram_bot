@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import subscription_pb2 as proto_dot_subscription__pb2
+from proto import subscription_pb2 as proto_dot_subscription__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
 GRPC_VERSION = grpc.__version__
@@ -10,6 +10,7 @@ _version_not_supported = False
 
 try:
     from grpc._utilities import first_version_is_lower
+
     _version_not_supported = first_version_is_lower(GRPC_VERSION, GRPC_GENERATED_VERSION)
 except ImportError:
     _version_not_supported = True
@@ -34,15 +35,15 @@ class SubscriptionServiceStub(object):
             channel: A grpc.Channel.
         """
         self.GetSubscriptions = channel.unary_unary(
-                '/proto.SubscriptionService/GetSubscriptions',
-                request_serializer=proto_dot_subscription__pb2.GetSubscriptionsRequest.SerializeToString,
-                response_deserializer=proto_dot_subscription__pb2.Subscriptions.FromString,
-                _registered_method=True)
+            '/proto.SubscriptionService/GetSubscriptions',
+            request_serializer=proto_dot_subscription__pb2.GetSubscriptionsRequest.SerializeToString,
+            response_deserializer=proto_dot_subscription__pb2.Subscriptions.FromString,
+            _registered_method=True)
         self.ActivateSubscription = channel.unary_unary(
-                '/proto.SubscriptionService/ActivateSubscription',
-                request_serializer=proto_dot_subscription__pb2.CreateSubscriptionRequest.SerializeToString,
-                response_deserializer=proto_dot_subscription__pb2.Subscription.FromString,
-                _registered_method=True)
+            '/proto.SubscriptionService/ActivateSubscription',
+            request_serializer=proto_dot_subscription__pb2.CreateSubscriptionRequest.SerializeToString,
+            response_deserializer=proto_dot_subscription__pb2.Subscription.FromString,
+            _registered_method=True)
 
 
 class SubscriptionServiceServicer(object):
@@ -63,38 +64,38 @@ class SubscriptionServiceServicer(object):
 
 def add_SubscriptionServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetSubscriptions': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetSubscriptions,
-                    request_deserializer=proto_dot_subscription__pb2.GetSubscriptionsRequest.FromString,
-                    response_serializer=proto_dot_subscription__pb2.Subscriptions.SerializeToString,
-            ),
-            'ActivateSubscription': grpc.unary_unary_rpc_method_handler(
-                    servicer.ActivateSubscription,
-                    request_deserializer=proto_dot_subscription__pb2.CreateSubscriptionRequest.FromString,
-                    response_serializer=proto_dot_subscription__pb2.Subscription.SerializeToString,
-            ),
+        'GetSubscriptions': grpc.unary_unary_rpc_method_handler(
+            servicer.GetSubscriptions,
+            request_deserializer=proto_dot_subscription__pb2.GetSubscriptionsRequest.FromString,
+            response_serializer=proto_dot_subscription__pb2.Subscriptions.SerializeToString,
+        ),
+        'ActivateSubscription': grpc.unary_unary_rpc_method_handler(
+            servicer.ActivateSubscription,
+            request_deserializer=proto_dot_subscription__pb2.CreateSubscriptionRequest.FromString,
+            response_serializer=proto_dot_subscription__pb2.Subscription.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'proto.SubscriptionService', rpc_method_handlers)
+        'proto.SubscriptionService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
     server.add_registered_method_handlers('proto.SubscriptionService', rpc_method_handlers)
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class SubscriptionService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def GetSubscriptions(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                         target,
+                         options=(),
+                         channel_credentials=None,
+                         call_credentials=None,
+                         insecure=False,
+                         compression=None,
+                         wait_for_ready=None,
+                         timeout=None,
+                         metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,
@@ -113,15 +114,15 @@ class SubscriptionService(object):
 
     @staticmethod
     def ActivateSubscription(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                             target,
+                             options=(),
+                             channel_credentials=None,
+                             call_credentials=None,
+                             insecure=False,
+                             compression=None,
+                             wait_for_ready=None,
+                             timeout=None,
+                             metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,
