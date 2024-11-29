@@ -1,13 +1,21 @@
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'services'))
+
 import datetime
 
 import telebot
 from dotenv import load_dotenv
-import os
 from telebot import types
 
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../utils'))
 from subscription_service import SubscriptionService
-from user_service import *
-from vpn_service import *
+from services.user_service import *
+from services.vpn_service import *
 from logging_config import setup_logging
 
 
@@ -99,7 +107,8 @@ class TelegramBot:
                         if len(subscriptions_ids) == 0 and chat_member.status in ['member', 'administrator', 'creator']:
                             bot.kick_chat_member(call.message.chat.id, call.from_user.id)
                             bot.unban_chat_member(call.message.chat.id, call.from_user.id)
-                        elif len(subscriptions_ids) != 0 and chat_member.status in ['member', 'administrator', 'creator']:
+                        elif len(subscriptions_ids) != 0 and chat_member.status in ['member', 'administrator',
+                                                                                    'creator']:
                             bot.send_message(call.message.chat.id, errors['subscription_already_bought']())
                             return
                     except ServerErrorException as e:
