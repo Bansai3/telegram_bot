@@ -144,7 +144,7 @@ class TestTelegramBot(unittest.TestCase):
         mock_message = MagicMock()
         mock_message.chat.id = self.chat_id
 
-        telegram_bot.handle_payment_command(mock_message)
+        telegram_bot.handle_subscription_command(mock_message)
 
         # Assert send_message is called
         mock_bot_instance.send_message.assert_called_once()
@@ -176,11 +176,11 @@ class TestTelegramBot(unittest.TestCase):
 
         telegram_bot = TelegramBot()
 
-        call = Mock()
-        call.data = "buy_sub"
-        call.message.chat.id = self.chat_id
+        message = Mock()
+        message.text = 'Купить подписку'
+        message.chat.id = self.chat_id
 
-        telegram_bot.subscription_handler(call)
+        telegram_bot.handle_commands(message)
         mock_bot_instance = mock_telebot.return_value
         # Assert send_message is called
         mock_bot_instance.send_message.assert_called_once()
@@ -193,11 +193,11 @@ class TestTelegramBot(unittest.TestCase):
 
         telegram_bot = TelegramBot()
 
-        call = Mock()
-        call.data = "country_USA"
-        call.message.chat.id = self.chat_id
+        message = Mock()
+        message.text = "USA"
+        message.chat.id = self.chat_id
 
-        telegram_bot.subscription_handler(call)
+        telegram_bot.handle_commands(message)
         mock_bot_instance = mock_telebot.return_value
         # Assert send_message is called
         mock_bot_instance.send_message.assert_called_once()

@@ -23,7 +23,7 @@ class UserService:
             raise ServerErrorException(errors['server_error']())
 
         username = message.from_user.first_name + ' ' + message.from_user.last_name
-        return commands['start'](username)
+        return username
 
     def get_user(self, message):
         user_id = proto_dot_user__pb2.UserId(id=message.from_user.id)
