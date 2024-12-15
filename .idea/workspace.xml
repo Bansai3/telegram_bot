@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76ac3411-996a-4667-a260-b5fee835e141" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/country/country_pb2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/country/country_pb2_grpc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/key/key_pb2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/key/key_pb2_grpc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/proxy/proxy_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pb2_module/proxy/proxy_pb2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/proxy/proxy_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pb2_module/proxy/proxy_pb2_grpc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TelegramBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/TelegramBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pb2_module/subscription/subscription_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pb2_module/subscription/subscription_pb2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pb2_module/subscription/subscription_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pb2_module/subscription/subscription_pb2_grpc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/user/user_pb2.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pb2_module/user/user_pb2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pb2_module/user/user_pb2_grpc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pb2_module/user/user_pb2_grpc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proto/country.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/proto/country.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proto/key.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/proto/key.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proto/subscription.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/proto/subscription.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proto/user.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/proto/user.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proto_script.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/proto_script.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/subscription_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/subscription_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/vpn_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/vpn_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/commands.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,29 +42,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for test_script.TestTelegramBot.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_script.TestTelegramBot.test_handle_info_command_actual.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/Vadim/Desktop/ITMO/7_сем/СВИ/Telegram_bot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_script.TestTelegramBot.executor": "Run",
+    "Python tests.Python tests for test_script.TestTelegramBot.test_handle_info_command_actual.executor": "Run",
+    "Python.main.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/Vadim/Desktop/ITMO/7_сем/СВИ/Telegram_bot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -165,7 +159,7 @@
       <workItem from="1732985079257" duration="6390000" />
       <workItem from="1732991923259" duration="2508000" />
       <workItem from="1734185127094" duration="20748000" />
-      <workItem from="1734218313466" duration="8940000" />
+      <workItem from="1734218313466" duration="19465000" />
     </task>
     <servers />
   </component>
@@ -184,6 +178,25 @@
     </option>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/services/user_service.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/services/subscription_service.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/services/subscription_service.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="subscriptions[0].__dict__" language="Python" />
@@ -191,7 +204,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Telegram_bot$main.coverage" NAME="main Coverage Results" MODIFIED="1734277514714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Telegram_bot$main.coverage" NAME="main Coverage Results" MODIFIED="1734287688707" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/Telegram_bot$.coverage" NAME=" Coverage Results" MODIFIED="1734198663794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>

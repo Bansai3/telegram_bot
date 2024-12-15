@@ -97,6 +97,28 @@ class TelegramBot:
             self.handle_pay_subscription(message)
         elif message.text == "Вернуться к выбору подписики":
             self.handle_subscription_choices(message)
+        elif message.text == "Мои подписки":
+            self.handle_get_all_my_subscriptions(message)
+
+    def handle_get_all_my_subscriptions(self, message):
+        markup = self.__get_menu_buttons()
+        try:
+            subscriptions = self.__get_all_user_subscriptions(message.from_user.id)
+            trial_subs_keys = [self.__vpn_service.get_key(sub.id) for sub in subscriptions if sub.trial]
+            subs_keys = [self.__vpn_service.get_key(sub.id) for sub in subscriptions if not sub.trial]
+            subs_values = "Пробные подписки:\n" + "\n".join(trial_subs_keys) + "\n" + \
+                           "Платные подписки:" + "\n".join(subs_keys)
+        except ServerErrorException:
+            self.bot.send_message(message.chat.id, commands['server_error'](), parse_mode='html', reply_markup=markup)
+            return
+        except Exception as e:
+            self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
+            return
+
+        self.bot.send_message(message.chat.id, subs_values, reply_markup=markup)
+
+
+
 
 
     def handle_get_back_to_menu(self, message):
@@ -160,7 +182,8 @@ class TelegramBot:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
         except CountryNotSpecifiedException as e:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
-        except:
+        except Exception as e:
+            print(str(e))
             self.bot.send_message(message.chat.id, errors['trial_subscription_already_bought'](), reply_markup=markup)
 
     def handle_get_subscription(self, message):
@@ -202,6 +225,7 @@ class TelegramBot:
                 self.log.debug('User info: %s', chat_member.user)
 
                 key_value = self.__get_key(country_name, message.from_user.id, False)
+                self.__delete_chat_member(message.from_user.id)
                 self.bot.send_message(message.chat.id, commands['key'](key_value), parse_mode='html', reply_markup=markup)
             else:
                 self.log.error('User %s is not a member of the subscription group', message.from_user.id)
@@ -241,7 +265,8 @@ class TelegramBot:
         btn1 = types.KeyboardButton("Информация о боте")
         btn2 = types.KeyboardButton("Подписка")
         btn3 = types.KeyboardButton("Информация о подписке")
-        markup.add(btn1, btn2, btn3)
+        btn4 = types.KeyboardButton("Мои подписки")
+        markup.add(btn1, btn2, btn3, btn4)
         return markup
 
 
@@ -317,3 +342,7 @@ class TelegramBot:
         if response.status_code != 200:
             self.log.info(f'Error deleting chat member! {response.text}')
             raise Exception(f"{response.text}")
+
+    def __get_all_user_subscriptions(self, user_id):
+        subscriptions = self.__payment_service.get_all_user_subscriptions(user_id)
+        return subscriptions

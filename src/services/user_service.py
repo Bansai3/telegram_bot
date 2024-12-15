@@ -17,18 +17,17 @@ class UserService:
         self.stub = UserServiceStub(channel)
 
     def register_user(self, message) -> str:
-        user_id = proto_dot_user__pb2.UserId(id=message.from_user.id)
-        response = self.stub.RegisterUser(user_id)
+        user_create_request = user__pb2.UserCreateRequest(id=message.from_user.id, username=message.from_user.username)
+        response = self.stub.RegisterUser(user_create_request)
         if response is None:
             raise ServerErrorException(errors['server_error']())
 
-        username = message.from_user.first_name + ' ' + message.from_user.last_name
-        return username
+        return message.from_user.username
 
     def get_user(self, message):
-        user_id = proto_dot_user__pb2.UserId(id=message.from_user.id)
+        user_id = user__pb2.UserId(id=message.from_user.id)
         response = self.stub.GetUserByID(user_id)
         if response is None:
             raise ServerErrorException(errors['server_error']())
-        username = message.from_user.first_name + ' ' + message.from_user.last_name
+        username = message.from_user.username
         return username

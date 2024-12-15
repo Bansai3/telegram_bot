@@ -13,7 +13,9 @@ from google.protobuf import runtime_version as _runtime_version
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf.internal import builder as _builder
 
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pb2_module/user'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../user'))
+
+import user_pb2 as user__pb2
 
 _runtime_version.ValidateProtobufRuntimeVersion(
     _runtime_version.Domain.PUBLIC,
@@ -30,7 +32,6 @@ _sym_db = _symbol_database.Default()
 
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-import user_pb2 as user__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12subscription.proto\x12\x05proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\nuser.proto\"\x87\x01\n\x0cSubscription\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07user_id\x18\x02 \x01(\x03\x12\x12\n\ncountry_id\x18\x03 \x01(\x03\x12\r\n\x05trial\x18\x04 \x01(\x08\x12\x37\n\x13\x65xpiration_datetime\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\";\n\rSubscriptions\x12*\n\rsubscriptions\x18\x01 \x03(\x0b\x32\x13.proto.Subscription\"N\n\x17GetSubscriptionsRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\x12\n\ncountry_id\x18\x02 \x01(\x03\x12\x0e\n\x06\x61\x63tive\x18\x03 \x01(\x08\"\x88\x01\n\x19\x43reateSubscriptionRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\x12\n\ncountry_id\x18\x02 \x01(\x03\x12\r\n\x05trial\x18\x03 \x01(\x08\x12\x37\n\x13\x65xpiration_datetime\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"8\n\x1d\x44\x65\x61\x63tivateSubscriptionRequest\x12\x17\n\x0fsubscription_id\x18\x01 \x01(\x03\"@\n\x1dHasActiveSubscriptionResponse\x12\x1f\n\x17has_active_subscription\x18\x01 \x01(\x08\x32\xd4\x02\n\x13SubscriptionService\x12H\n\x10GetSubscriptions\x12\x1e.proto.GetSubscriptionsRequest\x1a\x14.proto.Subscriptions\x12M\n\x14\x41\x63tivateSubscription\x12 .proto.CreateSubscriptionRequest\x1a\x13.proto.Subscription\x12L\n\x15HasActiveSubscription\x12\r.proto.UserId\x1a$.proto.HasActiveSubscriptionResponse\x12V\n\x16\x44\x65\x61\x63tivateSubscription\x12$.proto.DeactivateSubscriptionRequest\x1a\x16.google.protobuf.Emptyb\x06proto3')

@@ -2,6 +2,7 @@ commands = {
     'start': lambda user_name:
     f'Привет, {user_name}! \n\n'
     'Добро пожаловать в @ShadowClosetBot \n\n'
+    'Ссылка для скачивания Outline клиента на Windows, если не удалось установить с сайта: https://disk.yandex.ru/d/ICI8tjJrLvYCyg \n\n'
     'Меню:',
     'info': lambda:
     '<b>О боте:</b>\n'
@@ -31,5 +32,7 @@ commands = {
     'В течении минуты вы получите ключ для VPN...',
     'key': lambda key:
     'Вот ваш ключ:\n'
-    f'{key}'
+    f'```\n'
+    f'{key}\n'
+    f'```',
 }

@@ -28,7 +28,7 @@ class SubscriptionService:
             expiration_timestamp = Timestamp()
             expiration_timestamp.FromDatetime(two_days_later)
 
-        sub_request = proto_dot_subscription__pb2.CreateSubscriptionRequest(user_id=user_id, country_id=country_id,
+        sub_request = subscription__pb2.CreateSubscriptionRequest(user_id=user_id, country_id=country_id,
                                                                             trial=is_trial,
                                                                             expiration_datetime=expiration_timestamp)
 
@@ -40,7 +40,7 @@ class SubscriptionService:
         return response
 
     def get_all_user_subscriptions(self, user_id):
-        get_user_subscriptions_request = proto_dot_subscription__pb2.GetSubscriptionsRequest(
+        get_user_subscriptions_request = subscription__pb2.GetSubscriptionsRequest(
             user_id=user_id, country_id=-1, active=True)
         subscriptions_response = self.stub.GetSubscriptions(get_user_subscriptions_request)
         if subscriptions_response is None:
