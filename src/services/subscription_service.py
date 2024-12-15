@@ -46,6 +46,8 @@ class SubscriptionService:
         if subscriptions_response is None:
             raise ServerErrorException(errors['server_error']())
         subscriptions = subscriptions_response.subscriptions
-        subscriptions_ids = [subscription.id for subscription in subscriptions]
+        return subscriptions
 
-        return subscriptions_ids
+    def get_all_non_trial_user_subscriptions(self, user_id):
+        subscriptions = self.get_all_user_subscriptions(user_id)
+        return [subscription for subscription in subscriptions if not subscription.trial]

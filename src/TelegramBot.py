@@ -5,6 +5,8 @@ from tabnanny import check
 
 import requests
 
+# from src.utils.exceptions.country_not_specified_exception import CountryNotSpecifiedException
+
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'services'))
 
 import datetime
@@ -21,6 +23,7 @@ from subscription_service import SubscriptionService
 from services.user_service import *
 from services.vpn_service import *
 from logging_config import setup_logging
+from exceptions.country_not_specified_exception import *
 
 
 class TelegramBot:
@@ -148,33 +151,37 @@ class TelegramBot:
     def handle_get_trial_subscription(self, message):
         markup = self.__get_menu_buttons()
         try:
+            if message.from_user.id not in self.users_subscription_countries:
+                raise CountryNotSpecifiedException("Надо выбрать страну для покупки подписки!")
             country_name = self.users_subscription_countries[message.from_user.id]
             key_value = self.__get_key(country_name, message.from_user.id, True)
             self.bot.send_message(message.chat.id, commands['key'](key_value), parse_mode='html', reply_markup=markup)
         except ServerErrorException as e:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
-        except TypeError as e:
-            self.bot.send_message(message.chat.id, "Надо выбрать страну для покупки подписки!", reply_markup=markup)
+        except CountryNotSpecifiedException as e:
+            self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
         except:
             self.bot.send_message(message.chat.id, errors['trial_subscription_already_bought'](), reply_markup=markup)
 
     def handle_get_subscription(self, message):
         markup = self.__get_menu_buttons()
         try:
-            country_name = self.users_subscription_countries[message.from_user.id]
-            subscriptions_ids = self.__get_user_subscriptions(message.from_user.id)
+            if message.from_user.id not in self.users_subscription_countries:
+                raise CountryNotSpecifiedException("Надо выбрать страну для покупки подписки!")
+            subscriptions = self.__get_non_trial_user_subscriptions(message.from_user.id)
             chat_member = self.bot.get_chat_member(self.subscription_group_id, message.from_user.id)
-            if len(subscriptions_ids) == 0 and chat_member.status in ['member', 'administrator', 'creator']:
+            subs_amount = len(subscriptions)
+            if subs_amount == 0 and chat_member.status in ['member', 'administrator', 'creator']:
                 self.__delete_chat_member(message.from_user.id)
-            elif len(subscriptions_ids) != 0 and chat_member.status in ['member', 'administrator',
+            elif subs_amount != 0 and chat_member.status in ['member', 'administrator',
                                                                         'creator']:
                 self.bot.send_message(message.chat.id, errors['subscription_already_bought'](), reply_markup=markup)
                 return
         except ServerErrorException as e:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
             return
-        except TypeError as e:
-            self.bot.send_message(message.chat.id, "Надо выбрать страну для покупки подписки!", reply_markup=markup)
+        except CountryNotSpecifiedException as e:
+            self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
             return
         except Exception as e:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
@@ -286,9 +293,9 @@ class TelegramBot:
         key_value = self.__vpn_service.get_key(subscription.id)
         return key_value
 
-    def __get_user_subscriptions(self, user_id):
-        subscriptions_ids = self.__payment_service.get_all_user_subscriptions(user_id)
-        return subscriptions_ids
+    def __get_non_trial_user_subscriptions(self, user_id):
+        subscriptions = self.__payment_service.get_all_non_trial_user_subscriptions(user_id)
+        return subscriptions
 
     def __check_env_variables(self):
         if self.bot_token is None or \
