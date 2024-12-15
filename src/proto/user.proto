@@ -4,7 +4,13 @@ package proto;
 
 message User {
   int64 id = 1;
-  bool had_trial = 2;
+  string username = 2;
+  bool had_trial = 3;
+}
+
+message UserCreateRequest {
+  int64 id = 1;
+  string username = 2;
 }
 
 message UserId {
@@ -12,7 +18,6 @@ message UserId {
 }
 
 service UserService {
-  rpc RegisterUser(UserId) returns (User) {}
+  rpc RegisterUser(UserCreateRequest) returns (User) {}
   rpc GetUserByID(UserId) returns (User) {}
 }
-

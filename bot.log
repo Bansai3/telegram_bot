@@ -1,0 +1,11 @@
+2024-12-15 18:42:20,854 [DEBUG] Starting new HTTPS connection (1): api.telegram.org:443
+2024-12-15 18:42:21,241 [DEBUG] https://api.telegram.org:443 "GET /bot7232642239:AAGQK-4YmI3jtckacAhCDFujdcPmo3vblaY/getMe HTTP/11" 200 257
+2024-12-15 18:42:21,244 [DEBUG] Starting new HTTPS connection (1): api.telegram.org:443
+2024-12-15 18:42:41,396 [DEBUG] https://api.telegram.org:443 "GET /bot7232642239:AAGQK-4YmI3jtckacAhCDFujdcPmo3vblaY/getUpdates?offset=1&timeout=20 HTTP/11" 200 23
+2024-12-15 18:43:01,480 [DEBUG] https://api.telegram.org:443 "GET /bot7232642239:AAGQK-4YmI3jtckacAhCDFujdcPmo3vblaY/getUpdates?offset=1&timeout=20 HTTP/11" 200 23
+2024-12-15 18:43:19,775 [INFO] Bot started successfully: 2024-12-15 18:43:19.775267
+2024-12-15 18:44:16,267 [DEBUG] Starting new HTTPS connection (1): api.telegram.org:443
+2024-12-15 18:44:16,426 [DEBUG] https://api.telegram.org:443 "GET /bot7232642239:AAGQK-4YmI3jtckacAhCDFujdcPmo3vblaY/getMe HTTP/11" 200 257
+2024-12-15 18:44:16,430 [DEBUG] Starting new HTTPS connection (1): api.telegram.org:443
+2024-12-15 18:44:36,592 [DEBUG] https://api.telegram.org:443 "GET /bot7232642239:AAGQK-4YmI3jtckacAhCDFujdcPmo3vblaY/getUpdates?offset=1&timeout=20 HTTP/11" 200 23
+2024-12-15 18:44:39,351 [INFO] Bot started successfully: 2024-12-15 18:44:39.351654

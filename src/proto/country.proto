@@ -18,8 +18,13 @@ message CountryName {
   string name = 1;
 }
 
+message CountryCreateRequest {
+  int64 id = 1;
+  string name = 2;
+}
+
 service CountryService {
   rpc GetAllCountries(google.protobuf.Empty) returns (Countries);
   rpc GetCountryByName(CountryName) returns (Country);
-  rpc CreateCountry(CountryName) returns (Country);
+  rpc CreateCountry(CountryCreateRequest) returns (Country);
 }
