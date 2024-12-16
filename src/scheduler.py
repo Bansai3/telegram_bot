@@ -7,4 +7,4 @@ class Scheduler:
 
     def schedule_jobs(self):
         for job in self._jobs:
-            schedule.every.day.at("0:00").do(job)
+            schedule.every().day.at("00:00").do(job)

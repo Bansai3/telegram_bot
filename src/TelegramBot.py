@@ -106,8 +106,20 @@ class TelegramBot:
             subscriptions = self.__get_all_user_subscriptions(message.from_user.id)
             trial_subs_keys = [self.__vpn_service.get_key(sub.id) for sub in subscriptions if sub.trial]
             subs_keys = [self.__vpn_service.get_key(sub.id) for sub in subscriptions if not sub.trial]
-            subs_values = "Пробные подписки:\n" + "\n".join(trial_subs_keys) + "\n" + \
-                           "Платные подписки:" + "\n".join(subs_keys)
+            if len(trial_subs_keys) == 0 and len(subs_keys) == 0:
+                subs_values = 'На данный момент у вас нет подписок\('
+            else:
+                subs_values = "```\n"
+                if len(trial_subs_keys) != 0:
+                    subs_values += 'Пробные подписки:\n\n'
+                    for i in range(len(trial_subs_keys)):
+                        subs_values += f"{i + 1}) {trial_subs_keys[i]}\n"
+                    subs_values += '\n'
+                if len(subs_keys) != 0:
+                    subs_values += "Платные подписки:\n\n"
+                    for i in range(len(subs_keys)):
+                        subs_values += f"{i + 1}) {subs_keys[i]}\n"
+                subs_values += "```"
         except ServerErrorException:
             self.bot.send_message(message.chat.id, commands['server_error'](), parse_mode='html', reply_markup=markup)
             return
@@ -115,7 +127,7 @@ class TelegramBot:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
             return
 
-        self.bot.send_message(message.chat.id, subs_values, reply_markup=markup)
+        self.bot.send_message(message.chat.id, subs_values, reply_markup=markup, parse_mode='MarkdownV2')
 
 
     def handle_get_back_to_menu(self, message):
@@ -174,7 +186,7 @@ class TelegramBot:
                 raise CountryNotSpecifiedException("Надо выбрать страну для покупки подписки!")
             country_name = self.users_subscription_countries[message.from_user.id]
             key_value = self.__get_key(country_name, message.from_user.id, True)
-            self.bot.send_message(message.chat.id, commands['key'](key_value), parse_mode='html', reply_markup=markup)
+            self.bot.send_message(message.chat.id, commands['key'](key_value), parse_mode='MarkdownV2', reply_markup=markup)
         except ServerErrorException as e:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
         except CountryNotSpecifiedException as e:
@@ -188,15 +200,11 @@ class TelegramBot:
         try:
             if message.from_user.id not in self.users_subscription_countries:
                 raise CountryNotSpecifiedException("Надо выбрать страну для покупки подписки!")
-            subscriptions = self.__get_non_trial_user_subscriptions(message.from_user.id)
+            # subscriptions = self.__get_non_trial_user_subscriptions(message.from_user.id)
+            # subs_amount = len(subscriptions)
             chat_member = self.bot.get_chat_member(self.subscription_group_id, message.from_user.id)
-            subs_amount = len(subscriptions)
-            if subs_amount == 0 and chat_member.status in ['member', 'administrator', 'creator']:
+            if chat_member.status in ['member', 'administrator', 'creator']:
                 self.__delete_chat_member(message.from_user.id)
-            elif subs_amount != 0 and chat_member.status in ['member', 'administrator',
-                                                                        'creator']:
-                self.bot.send_message(message.chat.id, errors['subscription_already_bought'](), reply_markup=markup)
-                return
         except ServerErrorException as e:
             self.bot.send_message(message.chat.id, str(e), reply_markup=markup)
             return
@@ -223,7 +231,7 @@ class TelegramBot:
 
                 key_value = self.__get_key(country_name, message.from_user.id, False)
                 self.__delete_chat_member(message.from_user.id)
-                self.bot.send_message(message.chat.id, commands['key'](key_value), parse_mode='html', reply_markup=markup)
+                self.bot.send_message(message.chat.id, commands['key'](key_value), parse_mode='MarkdownV2', reply_markup=markup)
             else:
                 self.log.error('User %s is not a member of the subscription group', message.from_user.id)
                 self.bot.send_message(message.chat.id, errors['not_found_after_payment_error'](),
