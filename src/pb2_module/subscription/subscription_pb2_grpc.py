@@ -8,7 +8,6 @@ import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 import subscription_pb2 as subscription__pb2
-
 import user_pb2 as user__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
@@ -60,6 +59,11 @@ class SubscriptionServiceStub(object):
                 request_serializer=subscription__pb2.DeactivateSubscriptionRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.GetAllSubscriptions = channel.unary_unary(
+                '/proto.SubscriptionService/GetAllSubscriptions',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=subscription__pb2.Subscriptions.FromString,
+                _registered_method=True)
 
 
 class SubscriptionServiceServicer(object):
@@ -89,6 +93,12 @@ class SubscriptionServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAllSubscriptions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SubscriptionServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -111,6 +121,11 @@ def add_SubscriptionServiceServicer_to_server(servicer, server):
                     servicer.DeactivateSubscription,
                     request_deserializer=subscription__pb2.DeactivateSubscriptionRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'GetAllSubscriptions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllSubscriptions,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=subscription__pb2.Subscriptions.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -221,6 +236,33 @@ class SubscriptionService(object):
             '/proto.SubscriptionService/DeactivateSubscription',
             subscription__pb2.DeactivateSubscriptionRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllSubscriptions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/proto.SubscriptionService/GetAllSubscriptions',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            subscription__pb2.Subscriptions.FromString,
             options,
             channel_credentials,
             insecure,

@@ -8,6 +8,7 @@ from subscription_pb2_grpc import *
 from exceptions.server_error_exception import *
 import datetime
 from google.protobuf.timestamp_pb2 import Timestamp
+from google.protobuf.empty_pb2 import Empty
 
 
 class SubscriptionService:
@@ -51,3 +52,18 @@ class SubscriptionService:
     def get_all_non_trial_user_subscriptions(self, user_id):
         subscriptions = self.get_all_user_subscriptions(user_id)
         return [subscription for subscription in subscriptions if not subscription.trial]
+
+    def get_all_subscriptions(self):
+        empty_request = Empty()
+        response = self.stub.GetAllSubscriptions(empty_request)
+        if response is None:
+            raise ServerErrorException(errors['server_error']())
+        subscriptions = response.subscriptions
+        return subscriptions
+
+    def deactivate_subscription(self, subscription_id):
+        deactivate_request = subscription__pb2.DeactivateSubscriptionRequest(
+            subscription_id=subscription_id
+        )
+        self.stub.DeactivateSubscription(deactivate_request)
+        return None

@@ -1,6 +1,6 @@
 import os
 import sys
-from datetime import timedelta
+from datetime import timedelta, datetime
 from tabnanny import check
 
 import requests
@@ -116,9 +116,6 @@ class TelegramBot:
             return
 
         self.bot.send_message(message.chat.id, subs_values, reply_markup=markup)
-
-
-
 
 
     def handle_get_back_to_menu(self, message):
@@ -242,6 +239,22 @@ class TelegramBot:
             self.bot.send_message(message.chat.id, errors['server_connection_error'](), parse_mode='html', reply_markup=markup)
 
 
+    def cron_subscriptions_info(self):
+        try:
+            subscriptions = self.__get_all_subscriptions()
+            subscriptions = [s for s in [] if s.expiration_datetime.GetCurrentTime() < datetime.datetime.now().timestamp()]
+            for sub in subscriptions:
+                try:
+                    chat_member = self.bot.get_chat_member(self.subscription_group_id, sub.user_id)
+                    if chat_member.status in ['member', 'administrator', 'creator']:
+                        continue
+                    self.__payment_service.deactivate_subscription(sub.id)
+                except Exception as e:
+                    self.log.error('Cron error while updating sub info for sub %s: %s', sub.id, e)
+        except Exception as e:
+            self.log.error('Cron error while updating sub info: %s', e)
+
+
     @staticmethod
     def __get_bot_token() -> str:
         return os.getenv("BOT_TOKEN")
@@ -345,4 +358,8 @@ class TelegramBot:
 
     def __get_all_user_subscriptions(self, user_id):
         subscriptions = self.__payment_service.get_all_user_subscriptions(user_id)
+        return subscriptions
+
+    def __get_all_subscriptions(self):
+        subscriptions = self.__payment_service.get_all_subscriptions()
         return subscriptions

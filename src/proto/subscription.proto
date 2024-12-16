@@ -45,4 +45,5 @@ service SubscriptionService {
   rpc ActivateSubscription(CreateSubscriptionRequest) returns(Subscription);
   rpc HasActiveSubscription(UserId) returns (HasActiveSubscriptionResponse);
   rpc DeactivateSubscription(DeactivateSubscriptionRequest) returns (google.protobuf.Empty);
+  rpc GetAllSubscriptions(google.protobuf.Empty) returns (Subscriptions);
 }
