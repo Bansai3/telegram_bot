@@ -95,7 +95,7 @@ class TelegramBot:
             self.handle_get_trial_subscription(message)
         elif message.text == "Я оплатил":
             self.handle_pay_subscription(message)
-        elif message.text == "Вернуться к выбору подписики":
+        elif message.text == "Вернуться к выбору подписки":
             self.handle_subscription_choices(message)
         elif message.text == "Мои подписки":
             self.handle_get_all_my_subscriptions(message)
